@@ -9,7 +9,10 @@ from mace.calculators import mace_mp
 torch.set_num_threads(8)
 name = sys.argv[1]
 atoms = read(f"data/converted/{name}.xyz")
-atoms.calc = mace_mp(model="medium")
+# atoms.calc = mace_mp(model="medium-mpa-0")
+atoms.calc = MACECalculator(
+    model_paths="models/mace_matpes_r2scan_baseline_run-3.model", device='cpu', default_dtype="float32")
+
 
 # Relax atoms + cell
 filt = FrechetCellFilter(atoms)
